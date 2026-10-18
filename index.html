@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KTMB | Refund & Feedback Demo</title>
+  <style>
+    :root { --orange:#ff8b20; --blue:#1766c2; --ink:#202b3c; --muted:#6d7886; --line:#dedede; --bg:#f1f1f1; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px; background:var(--bg); color:var(--ink); font-family:Arial,Helvetica,sans-serif; }
+    .shell { max-width:1120px; margin:0 auto; background:#fff; border-radius:14px; box-shadow:0 8px 24px #0002; padding:28px 26px 24px; }
+    .top { display:flex; justify-content:flex-end; gap:8px; margin-bottom:22px; }
+    .lang { border:0; padding:12px 18px; border-radius:8px; background:#e8e8e8; color:var(--orange); cursor:pointer; }
+    .lang.active { background:#ffe83b; color:#3c3c3c; }
+    h1 { font-size:clamp(22px,3vw,30px); margin:0 0 34px; font-weight:700; }
+    .step { display:none; }
+    .step.active { display:block; }
+    .field-row { display:grid; grid-template-columns:minmax(220px, 34%) 1fr; gap:24px; padding:22px 0; border-bottom:1px solid var(--line); align-items:start; }
+    label, .field-label { color:#687586; font-size:18px; line-height:1.5; }
+    label .required { color:#e56b20; }
+    input, select, textarea { width:100%; border:2px solid #d0d0d0; border-radius:4px; padding:12px 14px; min-height:48px; background:#fff; color:#263243; font:16px Arial,sans-serif; }
+    select { border-width:1px; color:#687586; }
+    textarea { min-height:105px; resize:vertical; }
+    .hint { display:block; font-size:14px; line-height:1.6; margin-top:8px; color:#758194; }
+    .buttons { display:flex; gap:8px; padding-top:24px; }
+    button.action { border:0; border-radius:5px; padding:12px 18px; font-size:17px; cursor:pointer; }
+    .back { background:#ddd; color:#263243; }
+    .next { background:var(--orange); color:#fff; }
+    .submit { background:var(--blue); color:#fff; }
+    button:disabled { opacity:.55; cursor:wait; }
+    .terms { display:flex; gap:12px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--line); color:#687586; line-height:1.8; }
+    .terms input { width:23px; min-width:23px; height:23px; min-height:23px; margin-top:4px; }
+    .terms a { color:#f07b22; }
+    .alert { display:none; margin-top:18px; padding:12px 14px; border-radius:6px; line-height:1.5; }
+    .alert.show { display:block; }
+    .error { background:#fff0f0; color:#9c2525; }
+    .success { background:#eaf8ee; color:#176532; }
+    .small-note { color:#687586; font-size:13px; margin-top:16px; }
+    #gas-frame { display:none; }
+    @media(max-width:680px) {
+      body { padding:10px; }
+      .shell { padding:18px 16px; }
+      .field-row { grid-template-columns:1fr; gap:8px; padding:16px 0; }
+      label,.field-label { font-size:16px; }
+      .top { justify-content:flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+<form id="complaintForm">
+      <section class="step active" id="step1">
+        <h1 data-i18n="step1Title">KITS Style (Wallet / Card Issue / Travel &amp; Insurance)</h1>
+
+        <div class="field-row">
+          <label for="title"><span data-i18n="title">Title</span>:<span class="required">*</span></label>
+          <input id="title" name="title" maxlength="150" required>
+        </div>
+
+        <div class="field-row">
+          <label for="category"><span data-i18n="category">Category</span>:<span class="required">*</span></label>
+          <select id="category" name="category" required>
+            <option value="" data-i18n="selectCategory">Please Select</option>
+            <option value="Wallet">Wallet</option>
+            <option value="Card Issue">Card Issue</option>
+            <option value="Travel">Travel</option>
+            <option value="Insurance">Insurance</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label for="issue"><span data-i18n="issue">Issue</span>:<span class="required">*</span></label>
+          <select id="issue" name="issue" required>
+            <option value="" data-i18n="selectIssue">Please select</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label for="description">
+            <span data-i18n="description">Description</span>:<span class="required">*</span>
+            <span class="hint" data-i18n="descriptionHint">Please state the station, date and time if applicable</span>
+          </label>
+          <textarea id="description" name="description" required maxlength="5000"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button class="action back" type="button" id="back1" data-i18n="back">Back</button>
+          <button class="action next" type="button" id="next" data-i18n="next">Next</button>
+        </div>
+      </section>
+
+      <section class="step" id="step2">
+        <h1 data-i18n="personalTitle">Personal Details</h1>
+        <div class="field-row">
+          <label for="fullName"><span data-i18n="fullName">Full Name</span>:<span class="required">*</span></label>
+          <input id="fullName" name="fullName" autocomplete="name" maxlength="150" required>
+        </div>
+        <div class="field-row">
+          <label for="idNumber"><span data-i18n="idNumber">MyKad/Passport Number</span>:<span class="required">*</span></label>
+          <input id="idNumber" name="idNumber" maxlength="40" autocomplete="off" required>
+        </div>
+        <div class="field-row">
+          <label for="phone"><span data-i18n="phone">Phone</span>:<span class="required">*</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required>
+        </div>
+        <div class="field-row">
+          <label for="email"><span data-i18n="email">Email Address</span>:<span class="required">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+        </div>
+        <div class="terms">
+          <input type="checkbox" id="terms" required>
+          <label for="terms" data-i18n="terms">I have read and understood the terms and conditions for fare/penalty refunds as outlined for Komuter and Intercity/ETS services, and I confirm that all information provided by me is correct. I agree that any information found to be untrue or in contradiction to the terms and conditions, as well as the results of the investigation by KTMB, may result in the cancellation of this complaint, and no refund will be provided to me.</label>
+        </div>
+        <div class="buttons">
+          <button class="action back" type="button" id="prev" data-i18n="back">Back</button>
+          <button class="action submit" type="submit" id="submitBtn" data-i18n="submit">Submit</button>
+        </div>
+      </section>
+      <div id="message" class="alert" role="status" aria-live="polite"></div>
+    </form>
+    <p class="small-note" data-i18n="demoNote">Demo only. Do not enter real MyKad/passport details or other sensitive customer information.</p>
+  </main>
+
+  <iframe name="gas-frame" id="gas-frame" title="Submission processor"></iframe>
+
+  <script>
+    // Replace this with your deployed Google Apps Script Web App URL.
+    const APPS_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    const issueOptions = {
+      "Wallet":["Wallet registration","Wallet balance","Wallet top-up","Wallet transaction","Other wallet issue"],
+      "Card Issue":["Card registration","Card blocked","Card balance","Card payment","Lost/damaged card","Other card issue"],
+      "Travel":["Booking issue","Ticket purchase","Journey information","Cancellation","Other travel issue"],
+      "Insurance":["Insurance purchase","Insurance coverage","Insurance claim","Other insurance issue"],
+      "Other":["Other issue"]
+    };
+    const form = document.getElementById("complaintForm");
+    const message = document.getElementById("message");
+    const issue = document.getElementById("issue");
+    const category = document.getElementById("category");
+    let submitting = false;
+
+    function updateIssueOptions() {
+      const selected = category.value;
+      issue.innerHTML = "";
+      const first = document.createElement("option");
+      first.value = "";
+      first.textContent = "Please select";
+      issue.appendChild(first);
+      (issueOptions[selected] || []).forEach(value => {
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = value;
+        issue.appendChild(opt);
+      });
+    }
+    category.addEventListener("change", updateIssueOptions);
+
+    function showMessage(text, kind) {
+      message.textContent = text;
+      message.className = "alert show " + kind;
+    }
+    function clearMessage() {
+      message.className = "alert";
+      message.textContent = "";
+    }
+
+    document.getElementById("next").addEventListener("click", () => {
+      clearMessage();
+      for (const id of ["title", "category", "issue", "description"]) {
+        if (!document.getElementById(id).reportValidity()) return;
+      }
+      document.getElementById("step1").classList.remove("active");
+      document.getElementById("step2").classList.add("active");
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    document.getElementById("prev").addEventListener("click", () => {
+      clearMessage();
+      document.getElementById("step2").classList.remove("active");
+      document.getElementById("step1").classList.add("active");
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    document.getElementById("back1").addEventListener("click", () => {
+      clearMessage();
+      showMessage("You are already on the first step.", "error");
+    });
+
+    window.addEventListener("message", event => {
+      const data = event.data;
+      if (!data || data.type !== "KTMB_TICKET_RESULT") return;
+      submitting = false;
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = false;
+      btn.textContent = "Submit";
+      if (data.success) {
+        showMessage("Complaint submitted successfully. Your Freshservice ticket reference is: " + (data.ticketId || "Created"), "success");
+        form.querySelectorAll("input,select,textarea,button").forEach(el => el.disabled = true);
+      } else {
+        showMessage(data.message || "Unable to confirm submission. Please check Freshservice before retrying to avoid duplicate tickets.", "error");
+      }
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      clearMessage();
+      if (!form.reportValidity()) return;
+      if (!document.getElementById("terms").checked) {
+        document.getElementById("terms").reportValidity();
+        return;
+      }
+      if (APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+        showMessage("Setup required: add the deployed Google Apps Script Web App URL to index.html.", "error");
+        return;
+      }
+      if (submitting) return;
+      submitting = true;
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.textContent = "Submitting your complaint…";
+
+      const payload = {
+        title: document.getElementById("title").value.trim(),
+        category: category.value,
+        issue: issue.value,
+        description: document.getElementById("description").value.trim(),
+        fullName: document.getElementById("fullName").value.trim(),
+        idNumber: document.getElementById("idNumber").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        termsAccepted: document.getElementById("terms").checked,
+        submissionId: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "-" + Math.random().toString(36).slice(2))
+      };
+
+      // Submit through a hidden form/iframe so the Freshservice API key stays server-side.
+      let old = document.getElementById("gasSubmitForm");
+      if (old) old.remove();
+      const hiddenForm = document.createElement("form");
+      hiddenForm.id = "gasSubmitForm";
+      hiddenForm.method = "POST";
+      hiddenForm.action = APPS_SCRIPT_URL;
+      hiddenForm.target = "gas-frame";
+      hiddenForm.style.display = "none";
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "payload";
+      input.value = JSON.stringify(payload);
+      hiddenForm.appendChild(input);
+      document.body.appendChild(hiddenForm);
+      hiddenForm.submit();
+    });
+  </script>
+</body>
+</html>
