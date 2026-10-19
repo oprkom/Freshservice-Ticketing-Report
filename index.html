@@ -61,18 +61,11 @@
           <label for="category"><span data-i18n="category">Category</span>:<span class="required">*</span></label>
           <select id="category" name="category" required>
             <option value="" data-i18n="selectCategory">Please Select</option>
-            <option value="Account Registration &amp; Verification">Account Registration &amp; Verification</option>
-            <option value="Application Crash">Application Crash</option>
-            <option value="Update Changes Request">Update Changes Request</option>
-            <option value="Wallet / Card Cancellation">Wallet / Card Cancellation</option>
-            <option value="Own Account Top Up">Own Account Top Up</option>
-            <option value="Fund Transfer Out">Fund Transfer Out</option>
-            <option value="Card Enrollment Failed">Card Enrollment Failed</option>
-            <option value="Mobile Reload">Mobile Reload</option>
-            <option value="Online Transaction / Payment">Online Transaction / Payment</option>
-            <option value="Chargeback">Chargeback</option>
-            <option value="Refund">Refund</option>
-            <option value="Travel &amp; Insurance">Travel &amp; Insurance</option>
+            <option value="Wallet">Wallet</option>
+            <option value="Card Issue">Card Issue</option>
+            <option value="Travel">Travel</option>
+            <option value="Insurance">Insurance</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
@@ -133,66 +126,14 @@
 
   <script>
     // Replace this with your deployed Google Apps Script Web App URL.
-    const APPS_SCRIPT_URL = "url";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzh6l2igcNIsAzspkkDs5W3Zlgo89BN8vZOKztMXZSVPPT-O9GbC_yixzTDQMOTSfMUPg/exec";
 
     const issueOptions = {
-      "Account Registration & Verification": [
-        "User did not submit documents (IC/Passport and selfie)",
-        "Document (IC/Passport/Selfie) unreadable which image must clear for example do not have (reflection/watermark/wearing cap)",
-        "Customer's nationality listed under FATF Sanction List does not provide supporting document working/student visa",
-        "Change Email"
-      ],
-      "Application Crash": [
-        "Apps auto close when do registration.",
-        "Not receive OTP (Failed to Register)",
-        "Failed to add Credit Card to perform top up to wallet account"
-      ],
-      "Update Changes Request": [
-        "Forgot or want change details in Mpay system",
-        "Previously registered with Mpay Wallet or other our Partner Wallet and must register with same details"
-      ],
-      "Wallet / Card Cancellation": [
-        "Lost, stolen or damaged card need to be canceled",
-        "Voluntary want to close account"
-      ],
-      "Own Account Top Up": [
-        "Amount deducted and not reflected"
-      ],
-      "Fund Transfer Out": [
-        "Failed to perform fund transfer",
-        "Amount Not Reflected"
-      ],
-      "Card Enrollment Failed": [
-        "Lost ten-digit Secure Code",
-        "The card has been enrolled by user or another user"
-      ],
-      "Mobile Reload": [
-        "Reload not credited to mobile number",
-        "Did not receive top up PIN at mobile number via SMS from provider"
-      ],
-      "Online Transaction / Payment": [
-        "Wallet/Card status is not yet active",
-        "Automatically blocked for some high-risk merchants",
-        "Key in wrong card details or pin number",
-        "Did not receive One Time Password (OTP)",
-        "Bill payment was successful but outstanding amount still not deducted by merchant",
-        "Unable to use QR code for make payment at partner store"
-      ],
-      "Chargeback": [
-        "User perform withdrawal was success but cash not dispended",
-        "Unauthorized transaction by user",
-        "Dispute transaction"
-      ],
-      "Refund": [
-        "User want to close account and request refund money to own bank account",
-        "User closer accidentally top up to wallet/card and request for adjustment"
-      ],
-      "Travel & Insurance": [
-        "Flight",
-        "Hotel",
-        "Insurance",
-        "Bill & Utitilities"
-      ]
+      "Wallet":["Wallet registration","Wallet balance","Wallet top-up","Wallet transaction","Other wallet issue"],
+      "Card Issue":["Card registration","Card blocked","Card balance","Card payment","Lost/damaged card","Other card issue"],
+      "Travel":["Booking issue","Ticket purchase","Journey information","Cancellation","Other travel issue"],
+      "Insurance":["Insurance purchase","Insurance coverage","Insurance claim","Other insurance issue"],
+      "Other":["Other issue"]
     };
     const form = document.getElementById("complaintForm");
     const message = document.getElementById("message");
@@ -270,7 +211,7 @@
         document.getElementById("terms").reportValidity();
         return;
       }
-      if (APPS_SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbzh6l2igcNIsAzspkkDs5W3Zlgo89BN8vZOKztMXZSVPPT-O9GbC_yixzTDQMOTSfMUPg/exec")) {
+      if (APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
         showMessage("Setup required: add the deployed Google Apps Script Web App URL to index.html.", "error");
         return;
       }
